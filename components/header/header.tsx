@@ -6,7 +6,7 @@ import close from "@/assets/bg/close1.svg"
 import menu from "@/assets/bg/mobile/menu3.svg";
 import { useToggleContext } from "@/context/toggleContext";
 
-export default function Header() {
+export default function LandingHeader() {
   const context = useToggleContext()
   console.log(`context is something else`, context)
   return (

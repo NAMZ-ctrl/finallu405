@@ -14,7 +14,7 @@ export const ToggleProvider = ({ children }: {children : React.ReactNode}) => {
     },
     {
       route: "Shop",
-      path: "/shop",
+      path: "/collections/all-products",
     },
   ];
 

@@ -5,6 +5,7 @@ import { MobileImages } from "@/libs/helper";
 import logo from "@/assets/405logo.png"
 import Header from "./header/header";
 import Link from "next/link";
+import LandingHeader from "./header/header";
 
 export default function Hero() {
   const [index, setIndex] = useState<number>(0);
@@ -20,14 +21,14 @@ export default function Hero() {
   return (
     <>
       <section className="w-full h-dvh relative flex flex-col">
-        <Header />
+        <LandingHeader/>
         <Image
           src={MobileImages[index]}
           alt={`images${index}`}
           className="object-cover w-full h-full absolute z-1 animate-fadein"
         />
         <div className="absolute z-2 text-white text-5xl w-full text-center top-1/2 left-1/2 -translate-x-1/2">
-            <Link className="uppercase text-white border border-white p-3 text-lg font-bold rounded-lg" href={'/shop'}>our store</Link>
+            <Link className="uppercase text-white border border-white p-3 text-lg font-bold rounded-lg" href={'/collections/all-products'}>our store</Link>
         </div>
         <div className="absolute">
           <svg
