@@ -18,15 +18,13 @@ const nav_links: NavLink[] = [
 export default function Header() {
   return (
     <>
-      <header className="h-12 flex justify-between items-center py-3">
+      <header className="min-h-12 flex justify-between items-center py-3">
         <nav className="flex gap-4">
           {nav_links.map((nav, index) => (
             <Nav key={index} nav={nav} color={`text-black`} />
           ))}
         </nav>
-        <div className="">
-          <Image src={logo} alt="brand-logo" fill/>
-        </div>
+       <Image src={logo} alt="logo" width={150} />
         <div>
             <ShoppingCart size={24} color="#000"/>
         </div>
