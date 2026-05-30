@@ -46,3 +46,8 @@ export { Prisma }
  * 
  */
 export type Product = Prisma.ProductModel
+/**
+ * Model Size
+ * 
+ */
+export type Size = Prisma.SizeModel

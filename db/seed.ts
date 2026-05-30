@@ -4,8 +4,8 @@ import { sampleData } from "./data";
 
 const main = async () => {
     await prisma.product.deleteMany();
-    await prisma.product.createMany({
-        data: sampleData.products,
+    await prisma.product.create({
+        data: sampleData.products
     });
     console.log("Database seeded successfully.");
 }

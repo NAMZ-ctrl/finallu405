@@ -1,9 +1,9 @@
-import type { ProductShape } from "@/types/store";
+import type { Product } from "@/app/generated/prisma/client";
 import { ShoppingBasket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface DetailedProductProps {
-  product: ProductShape;
+  product: Product;
 }
 
 export default function DetailedProduct({ product }: DetailedProductProps) {
@@ -27,10 +27,13 @@ export default function DetailedProduct({ product }: DetailedProductProps) {
             </div>
             <Button className="uppercase flex justify-center">
               <div className="flex gap-2 items-center">
-                <ShoppingBasket color="#fff"/>
+                <ShoppingBasket color="#fff" />
                 <span className="uppercase text-white">ADD TO CART</span>
               </div>
             </Button>
+          </div>
+          <div>
+            <Button className="text-white">BUY IT NOW</Button>
           </div>
         </div>
       </div>

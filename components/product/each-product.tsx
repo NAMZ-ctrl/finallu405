@@ -1,11 +1,11 @@
 "use client";
 import { Card, CardHeader, CardTitle, CardDescription } from "../ui/card";
-import { ProductShape } from "@/types/store";
+import type { Product } from "@/app/generated/prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function EachProduct({ product }: { product: ProductShape }) {
+export default function EachProduct({ product }: { product: Product}) {
   const [imageNum, setImageNum] = useState(0)
 
   const changeImage = () => {

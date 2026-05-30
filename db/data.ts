@@ -15,8 +15,13 @@ export const sampleData = {
       guide:
         "https://res.cloudinary.com/dzbxigocr/image/upload/v1779525387/photo_2026-05-23_09.34.46_ixxhxq.jpg",
       category: "sweatpants",
-    },
+      sizes: [
+        {name: 'XS', quantity: 500},
+        {name: 'S', quantity: 500},
+        {name: 'M', quantity: 500},
+        {name: 'L', quantity: 500},
+        {name: 'XL', quantity: 500},
+      ]
+    }
   ],
 };
-
-console.log(process.env.DATABASE_URL);
