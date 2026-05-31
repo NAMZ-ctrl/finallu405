@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="flex flex-col items-center gap-5">
           <h3 className="text-xl uppercase tracking-wider font-medium text-black">Contact Us</h3>
           <div className="flex gap-8 mt-3">
-                {socials.map((each) => <a href={each['link']} className="hover:cursor-pointer" target="__blank">
+                {socials.map((each, index) => <a href={each['link']} className="hover:cursor-pointer" target="__blank" key={index}>
                     <Image src={each['social']} alt="" className="size-8"/>
                 </a>)}
           </div>

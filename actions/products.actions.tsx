@@ -21,3 +21,12 @@ export async function getProductBySlug(slug: string) {
   })
   return data;
 }
+
+export async function getSizesBySlug(slug: string) {
+  const size = await prisma.size.findMany({
+    where: {
+      product_id: slug
+    }
+  })
+  return size;
+}
