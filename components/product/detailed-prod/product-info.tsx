@@ -3,34 +3,41 @@
 import { ShoppingBagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProduct } from "@/store/store";
+import SizeContainer from "./sizes-comp";
+import IncreDecre from "./incre-decre";
+import Description from "./description";
 
 
 export default function ProductInfo() {
-//   const [number, setNumber] = useState(0);
+  //   const [number, setNumber] = useState(0);
   const product = useProduct.getState().singleProduct;
   return (
     <>
-      <div>
-        <div className="grid-rows-2 gap-3">
-          <h1 className="text-4xl font-extrabold uppercase">{product?.name}</h1>
-          <p className="font-bold text-black text-xl">{product?.price}</p>
-        </div>
-        <div>
-          <span>Size</span>
-        </div>
-        <div className="grid">
-          <div className="grid grid-cols-[auto_0.5fr] gap-4">
-            {/* <div>
-              <Button onClick={() => setNumber(prev => prev + 1)}>+</Button>
-              <input type="text" value={number} onChange={(e) => setNumber(parseInt(e.target.value) || 0)} />
-              <Button onClick={() => setNumber(prev => prev - 1)}>-</Button>
-            </div> */}
-            <Button>
-              <ShoppingBagIcon />
-              <span>Add to cart</span>
+      <div className="px-3">
+        <div className="flex flex-col justify-start">
+          <div className="flex flex-col gap-2">
+            <h1 className="font-bold tracking-wide text-3xl uppercase p-0">
+              {product?.name}
+            </h1>
+            <div className="font-medium text-xl">
+              <span>&#x20A6;</span>
+              {product?.price}NGN
+            </div>
+          </div>
+          <SizeContainer />
+          <div className="grid items-center gap-3">
+            <div className="grid grid-cols-[1fr_3fr] gap-4">
+              <IncreDecre />
+              <Button className="h-13 rounded-2xl hover:cursor-pointer hover:opacity-80">
+                <ShoppingBagIcon />
+                <span>Add to cart</span>
+              </Button>
+            </div>
+            <Button className="h-13 hover:cursor-pointer hover:opacity-80">
+              Buy it Now
             </Button>
           </div>
-          <Button>Buy it Now</Button>
+          <Description />
         </div>
       </div>
     </>

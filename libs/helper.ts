@@ -6,3 +6,8 @@ import fifth from"@/assets/bg/mobile/fifth.jpg"
 
 export const MobileImages = [first, second, third, fourth, fifth]
 export const DesktopImages = []
+
+export const splitDescription= (description: string) => {
+    const eachDescription = description.split(",")
+    return eachDescription;
+}

@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/db/db";
-import { ProductShape } from "@/types/store";
+
 
 export async function getLatestProducts(){
   const data = await prisma.product.findMany({
@@ -30,3 +30,4 @@ export async function getSizesBySlug(slug: string) {
   })
   return size;
 }
+

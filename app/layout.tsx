@@ -29,6 +29,7 @@ export default function LandingLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <div className="absolute z-20 min-h-full"></div>
         <ToggleProvider>{children}</ToggleProvider>
       </body>
     </html>

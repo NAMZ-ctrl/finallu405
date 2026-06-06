@@ -11,3 +11,8 @@ export interface ToggleType{
     handleCloseClick: () => void,
     nav_links: NavLink[]
 }
+
+
+export interface ProductGuideProps {
+  guide: string;
+}
