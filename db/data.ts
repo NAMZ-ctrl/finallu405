@@ -1,6 +1,21 @@
 import "dotenv/config";
+import {hashSync} from "bcrypt-ts-edge"
 
 export const sampleData = {
+  users: [
+    {
+      name: "ayo",
+      email: "adewoyenifemi8@gmail.com",
+      password: hashSync("password", 10),
+      role: "admin"
+    },
+    {
+      name: "Nifemi",
+      email: "oadewoye.2200315@stu.cu.edu.ng",
+      password: hashSync("password", 10),
+      role: "user"
+    }
+  ],
   products: [
     {
       slug: "genesis-sweatpants",
@@ -16,12 +31,12 @@ export const sampleData = {
         "https://res.cloudinary.com/dzbxigocr/image/upload/v1779525387/photo_2026-05-23_09.34.46_ixxhxq.jpg",
       category: "sweatpants",
       sizes: [
-        {name: 'XS', quantity: 500},
-        {name: 'S', quantity: 500},
-        {name: 'M', quantity: 500},
-        {name: 'L', quantity: 500},
-        {name: 'XL', quantity: 500},
-      ]
-    }
+        { name: "XS", quantity: 500 },
+        { name: "S", quantity: 500 },
+        { name: "M", quantity: 500 },
+        { name: "L", quantity: 500 },
+        { name: "XL", quantity: 500 },
+      ],
+    },
   ],
 };

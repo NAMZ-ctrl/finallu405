@@ -1,0 +1,38 @@
+"use server";
+
+import { signInFormSchema, SignInInput, signInError } from "@/libs/validators";
+import { z } from "zod";
+import { signIn, signOut } from "@/auth";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
+
+interface ActionState {
+  errors?: signInError;
+  success?: boolean;
+  message?: string;
+}
+
+// sign in with user credentials
+export async function signInWithCredentials(
+  prevState: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  try {
+    const signInData = Object.fromEntries(formData);
+    const user = signInFormSchema.safeParse(signInData);
+    if (!user.success) {
+      const errors = z.flattenError(user.error).fieldErrors;
+      return { errors };
+    }
+    await signIn("credentials", user);
+    return { success: true, message: "Signed in Successfully" };
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    return { success: false, message: "Invalid email or password" };
+  }
+}
+
+export async function signOutUser() {
+  await signOut();
+}
