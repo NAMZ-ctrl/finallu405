@@ -1,11 +1,10 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/db/db";
-import CredentialsProvider from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
-import type { NextAuthOptions } from "next-auth"
 
-export const config: NextAuthOptions = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/sign-in",
     error: "/sign-in",
@@ -16,28 +15,25 @@ export const config: NextAuthOptions = {
   },
   adapter: PrismaAdapter(prisma),
   providers: [
-    CredentialsProvider({
+    Credentials({
       credentials: {
         email: { type: "email" },
         password: { type: "password" },
       },
       async authorize(credentials) {
-        if (credentials == null) return null;
+        if (!credentials) return null;
 
-        // find user in database
+        // checking if the user exists
         const user = await prisma.user.findFirst({
-          where: {
-            email: credentials.email as string,
-          },
+          where: { email: credentials.email as string },
         });
-        // check if user exists and if the password matches
+
+        // comparing the password together
         if (user && user.password) {
           const isMatch = compareSync(
             credentials.password as string,
             user.password,
           );
-
-          // if password is correct return user
           if (isMatch) {
             return {
               id: user.id,
@@ -47,22 +43,17 @@ export const config: NextAuthOptions = {
             };
           }
         }
-        // if user does not exist
         return null;
       },
     }),
   ],
   callbacks: {
     async session({ session, user, trigger, token }: any) {
-      // set the user ID from the token
       session.user.id = token.sub;
-
-      // if there is an update, set the user name
       if (trigger === "update") {
-        session.user.name === user.name;
+        session.user.name = user.name; // ← also fixed: you had === instead of =
       }
+      return session; // ← must return session in v5
     },
   },
-};
-
-export const { handlers, auth, signIn, signOut } = NextAuth(config);
+});

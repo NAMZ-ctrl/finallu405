@@ -16,12 +16,12 @@ export default async function SizeContainer() {
         </button>
         <div className="grid gap-3">
           <span className="font-bold">Size</span>
-          <div className="flex justify-between flex-wrap">
+          <div className="flex md:justify-start flex-wrap gap-y-2 max-md:justify-between">
             {sizes.map((size, index) => {
               return (
                 <label
                   htmlFor=""
-                  className="border-gray-200 border-2 w-20 h-11 rounded-2xl flex items-center justify-center p-2 hover:cursor-pointer"
+                  className="border-gray-200 border-2 w-14 h-10 rounded-2xl flex items-center justify-center p-2 hover:cursor-pointer mr-3"
                   key={index}
                 >
                   <input type="radio" className="hidden" />

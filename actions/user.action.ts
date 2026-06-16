@@ -23,9 +23,15 @@ export async function signInWithCredentials(
       const errors = z.flattenError(user.error).fieldErrors;
       return { errors };
     }
-    await signIn("credentials", user);
+    console.log(user.data.email)
+    await signIn("credentials", {
+      email: user.data.email,
+      password: user.data.password,
+      redirectTo: "/products"
+    });
     return { success: true, message: "Signed in Successfully" };
   } catch (error) {
+    console.log(error);
     if (isRedirectError(error)) {
       throw error;
     }

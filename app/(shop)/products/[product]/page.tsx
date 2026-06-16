@@ -1,4 +1,4 @@
-import ProductImage from "@/components/product/detailed-prod/product-image";
+import ProductImage from "@/components/product/images-comp/product-image";
 import ProductInfo from "@/components/product/detailed-prod/product-info";
 import SizeGuide from "@/components/product/detailed-prod/size-guide";
 import { useProduct } from "@/store/store";
@@ -16,13 +16,12 @@ export default async function ProductPage({ params }: Params) {
   if (!singleProduct) notFound();
   return (
     <>
-      <section className="">
+      <section className="grid md:grid-cols-[1fr_0.5fr]">
         <ProductImage
           images={singleProduct?.images}
           productName={singleProduct?.name || ""}
         />
         <ProductInfo />
-        {/* <SizeGuide guide={singleProduct?.guide || ""} /> */}
       </section>
     </>
   );

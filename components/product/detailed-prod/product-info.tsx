@@ -13,8 +13,7 @@ export default function ProductInfo() {
   const product = useProduct.getState().singleProduct;
   return (
     <>
-      <div className="px-3">
-        <div className="flex flex-col justify-start">
+      <div className="grid gap-3 h-fit max-md:mt-4 max-md:px-2">
           <div className="flex flex-col gap-2">
             <h1 className="font-bold tracking-wide text-3xl uppercase p-0">
               {product?.name}
@@ -38,7 +37,6 @@ export default function ProductInfo() {
             </Button>
           </div>
           <Description />
-        </div>
       </div>
     </>
   );

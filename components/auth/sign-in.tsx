@@ -29,8 +29,11 @@ export default function SignIn() {
         </div>
         <input
           type="submit"
-          className="text-white bg-black hover:cursor-pointer rounded-md uppercase"
+          className={`${isPending ? 'text-green-400' : 'text-white bg-black hover:cursor-pointer rounded-md uppercase'}`}
         />
+        <div>
+            {state?.message && <span>{state.message}</span>}
+        </div>
       </form>
     </>
   );

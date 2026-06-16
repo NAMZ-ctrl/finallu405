@@ -1,8 +1,10 @@
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import logo from "@/assets/405logo.png";
+import Link from "next/link";
 import type { NavLink } from "@/types/store";
 import Nav from "@/components/header/nav";
 import Image from "next/image";
+import UserButton from "@/components/user-button";
 
 const nav_links: NavLink[] = [
   {
@@ -25,8 +27,9 @@ export default function Header() {
           ))}
         </nav>
        <Image src={logo} alt="logo" width={150} />
-        <div>
+        <div className="flex gap-3">
             <ShoppingCart size={24} color="#000"/>
+            {/* <UserButton/> */}
         </div>
       </header>
     </>

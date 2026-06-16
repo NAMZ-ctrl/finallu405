@@ -3,7 +3,7 @@ export default function AuthLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <section className="self-center justify-self-center h-100 border-2 border-red-400">{children}</section>
+      <section className="relative self-center justify-self-center h-fit border-2 border-red-400 -top-1/2">{children}</section>
     </>
   );
 }
