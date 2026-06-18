@@ -6,11 +6,22 @@ import { useProduct } from "@/store/store";
 import SizeContainer from "./sizes-comp";
 import IncreDecre from "./incre-decre";
 import Description from "./description";
+import AddToCart from "@/components/product/add-to-cart";
+import { Cart } from "@/libs/validators";
 
 
 export default function ProductInfo() {
   //   const [number, setNumber] = useState(0);
   const product = useProduct.getState().singleProduct;
+  console.log('product info', product)
+  const productCart: Cart = {
+    productId: product.id,
+    name: product.name,
+    slug: product.slug,
+    image: product.images[0]!,
+    qty: 1,
+    currency: product.price
+  }
   return (
     <>
       <div className="grid gap-3 h-fit max-md:mt-4 max-md:px-2">
@@ -27,10 +38,7 @@ export default function ProductInfo() {
           <div className="grid items-center gap-3">
             <div className="grid grid-cols-[1fr_3fr] gap-4">
               <IncreDecre />
-              <Button className="h-13 rounded-2xl hover:cursor-pointer hover:opacity-80">
-                <ShoppingBagIcon />
-                <span>Add to cart</span>
-              </Button>
+              <AddToCart item={productCart}/>
             </div>
             <Button className="h-13 hover:cursor-pointer hover:opacity-80">
               Buy it Now

@@ -71,3 +71,8 @@ export type VerificationToken = Prisma.VerificationTokenModel
  * 
  */
 export type Size = Prisma.SizeModel
+/**
+ * Model Cart
+ * 
+ */
+export type Cart = Prisma.CartModel

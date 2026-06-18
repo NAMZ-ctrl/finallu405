@@ -1,19 +1,19 @@
 "use server";
 
-import { signInFormSchema, SignInInput, signInError } from "@/libs/validators";
+import { signInFormSchema, SignInInput, SignInError } from "@/libs/validators";
 import { z } from "zod";
 import { signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 interface ActionState {
-  errors?: signInError;
+  errors?: SignInError;
   success?: boolean;
   message?: string;
 }
 
 // sign in with user credentials
 export async function signInWithCredentials(
-  prevState: ActionState,
+  prevState: ActionState,    
   formData: FormData,
 ): Promise<ActionState> {
   try {
