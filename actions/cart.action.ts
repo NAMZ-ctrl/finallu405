@@ -59,9 +59,8 @@ export async function addToCart(data: Cart) {
 
       // add to database
       await prisma.cart.create({
-        data: newCart.data,
+        data: newCart.data!,
       });
-
       // revlidate product page
       revalidatePath(`products/${product.slug}`);
     }
