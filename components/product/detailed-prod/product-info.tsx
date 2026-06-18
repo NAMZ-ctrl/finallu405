@@ -20,7 +20,7 @@ export default function ProductInfo() {
     slug: product.slug,
     image: product.images[0]!,
     qty: 1,
-    currency: product.price
+    price: product.price
   }
   return (
     <>
