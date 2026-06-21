@@ -56,6 +56,7 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
+  Color: 'Color',
   Size: 'Size',
   Cart: 'Cart'
 } as const
@@ -144,6 +145,17 @@ export const VerificationTokenScalarFieldEnum = {
 } as const
 
 export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const ColorScalarFieldEnum = {
+  id: 'id',
+  product_id: 'product_id',
+  hexCode: 'hexCode',
+  color: 'color',
+  image: 'image'
+} as const
+
+export type ColorScalarFieldEnum = (typeof ColorScalarFieldEnum)[keyof typeof ColorScalarFieldEnum]
 
 
 export const SizeScalarFieldEnum = {

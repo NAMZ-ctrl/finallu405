@@ -389,6 +389,7 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
+  Color: 'Color',
   Size: 'Size',
   Cart: 'Cart'
 } as const
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "product" | "user" | "account" | "session" | "verificationToken" | "size" | "cart"
+    modelProps: "product" | "user" | "account" | "session" | "verificationToken" | "color" | "size" | "cart"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -780,6 +781,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Color: {
+      payload: Prisma.$ColorPayload<ExtArgs>
+      fields: Prisma.ColorFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ColorFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ColorFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        findFirst: {
+          args: Prisma.ColorFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ColorFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        findMany: {
+          args: Prisma.ColorFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>[]
+        }
+        create: {
+          args: Prisma.ColorCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        createMany: {
+          args: Prisma.ColorCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ColorCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>[]
+        }
+        delete: {
+          args: Prisma.ColorDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        update: {
+          args: Prisma.ColorUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        deleteMany: {
+          args: Prisma.ColorDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ColorUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ColorUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>[]
+        }
+        upsert: {
+          args: Prisma.ColorUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPayload>
+        }
+        aggregate: {
+          args: Prisma.ColorAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateColor>
+        }
+        groupBy: {
+          args: Prisma.ColorGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ColorGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ColorCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ColorCountAggregateOutputType> | number
+        }
+      }
+    }
     Size: {
       payload: Prisma.$SizePayload<ExtArgs>
       fields: Prisma.SizeFieldRefs
@@ -1035,6 +1110,17 @@ export const VerificationTokenScalarFieldEnum = {
 } as const
 
 export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const ColorScalarFieldEnum = {
+  id: 'id',
+  product_id: 'product_id',
+  hexCode: 'hexCode',
+  color: 'color',
+  image: 'image'
+} as const
+
+export type ColorScalarFieldEnum = (typeof ColorScalarFieldEnum)[keyof typeof ColorScalarFieldEnum]
 
 
 export const SizeScalarFieldEnum = {
@@ -1314,6 +1400,7 @@ export type GlobalOmitConfig = {
   account?: Prisma.AccountOmit
   session?: Prisma.SessionOmit
   verificationToken?: Prisma.VerificationTokenOmit
+  color?: Prisma.ColorOmit
   size?: Prisma.SizeOmit
   cart?: Prisma.CartOmit
 }

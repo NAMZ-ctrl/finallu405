@@ -1,25 +1,23 @@
 import {create } from "zustand";
-import { Product } from "@/app/generated/prisma/client";
-import { getProductBySlug, getSizesBySlug } from "@/actions/products.actions";
-import { Size } from "@/prisma/app/generated/prisma/client";
-
+import { getColorsBySlug, getProductBySlug, getSizesBySlug } from "@/actions/products.actions";
+import { Size, Color, Product } from "@/prisma/app/generated/prisma/client";
 type Action = {
     singleProduct: Product,
-    sizes: Size[],
+    colors: Color[],
     loadProduct: (product: string) => Promise<void>,
-    loadSizes: (slug: string) => Promise<void>,
-    
+    loadColors: (slug: string) => Promise<void>
 }
 
 export const useProduct = create<Action>((set) => ({
     singleProduct: {} as Product,
-    sizes: [],
+    colors: [],
     loadProduct: async (product: string) => {
         const singleProduct = await getProductBySlug(product);
         return set({singleProduct: singleProduct as Product})
     },
-    loadSizes: async (slug: string) => {
-        const sizes = await getSizesBySlug(slug);
-        return set({sizes: sizes})
+    loadColors: async (slug: string) => {
+        const colors = await getColorsBySlug(slug)
+        return set({colors: colors as Color[]})
     }
+
 }))

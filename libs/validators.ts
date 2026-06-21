@@ -27,9 +27,11 @@ export const cartSchema = z.object({
   productId: z.string().min(1, "id is required"),
   name: z.string().min(1, "name is required"),
   slug: z.string().min(1, "slug is required"),
-  qty: z.number().int().nonnegative("qunatity cannot be negative"),
+  qty: z.string(),
+  size: z.string().min(1, "size is required"),
+  color: z.string().min(1, "color is required"),
   image: z.string().min(1, "Image is required"),
-  price: z.number(),
+  price: z.string(),
 });
 
 export const insertCartSchema = z.object({
@@ -46,3 +48,4 @@ export type SignInInput = z.infer<typeof signInFormSchema>;
 export type SignInError = z.core.$ZodFlattenedError<SignInInput>["fieldErrors"];
 export type InsertCart = z.infer<typeof insertCartSchema>;
 export type Cart = z.infer<typeof cartSchema>;
+export type CartError = z.core.$ZodFlattenedError<Cart>["fieldErrors"]

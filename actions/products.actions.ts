@@ -31,3 +31,12 @@ export async function getSizesBySlug(slug: string) {
   return size;
 }
 
+export async function getColorsBySlug(slug: string){
+  const colors = await prisma.color.findMany({
+    where: {
+      product_id: slug
+    }
+  })
+  return colors
+}
+

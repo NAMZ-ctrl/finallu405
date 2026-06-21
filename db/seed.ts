@@ -1,8 +1,7 @@
-import type { ProductCreateInput } from "@/app/generated/prisma/models";
-import type { Size } from "@/prisma/app/generated/prisma/client";
+
 import { prisma } from "./db";
 import { sampleData } from "./data";
-import { size } from "zod";
+
 
 const main = async () => {
   await prisma.size.deleteMany();
@@ -13,13 +12,16 @@ const main = async () => {
   await prisma.user.deleteMany();
 
   for (const product of sampleData.products) {
-    const { sizes, ...productData } = product;
+    const { sizes, colors, ...productData } = product;
     await prisma.product.create({
       data: {
         ...productData,
         sizes: {
           create: sizes,
         },
+        colors: {
+          create: colors
+        }
       },
     });
   }

@@ -43,6 +43,11 @@ export type Session = Prisma.SessionModel
  */
 export type VerificationToken = Prisma.VerificationTokenModel
 /**
+ * Model Color
+ * 
+ */
+export type Color = Prisma.ColorModel
+/**
  * Model Size
  * 
  */

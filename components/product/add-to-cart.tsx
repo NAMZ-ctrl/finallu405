@@ -11,21 +11,20 @@ interface AddToCartType {
   item: Cart;
 }
 
-export default function AddToCart({ item }: AddToCartType) {
-  const addItemToCart = async () => {
-    const res = await addToCart(item);
-    if (!res.success) {
-      toast.error(res.message);
-    }
-    toast.success(res.message);
-  };
+export default function AddToCart() {
+  // const addItemToCart = async () => {
+  //   const res = await addToCart(item);
+  //   if (!res.success) {
+  //     toast.error(res.message);
+  //   }
+  //   toast.success(res.message);
+  // };
 
   return (
     <>
       <Button
         className="h-13 rounded-2xl hover:cursor-pointer hover:opacity-80"
-        type="button"
-        onClick={addItemToCart}
+        type="submit"
       >
         <ShoppingBagIcon />
         <span>Add to cart</span>

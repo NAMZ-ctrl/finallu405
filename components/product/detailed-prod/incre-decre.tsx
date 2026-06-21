@@ -1,17 +1,42 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Minus, Plus} from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 
 export default function IncreDecre() {
-  const [number, setNumber] = useState(0);
+
+  const [number, setNumber] = useState(1);
+
+  const increment = () => {
+    setNumber(number + 1);
+  };
+
+  const decrement = () => {
+    setNumber((number) => (number <= 1 ? 1 : number - 1));
+  };
   return (
     <>
-      <div className="flex items-center p-3 border-gray-200 border-2 rounded-2xl h-13">
-        <Button className="bg-white text-black text-2xl font-bold hover:cursor-pointer"><Minus/></Button>
-        <span className="font-bold">{number}</span>
-        <Button className="bg-white text-black text-2xl font-bold hover:cursor-pointer"><Plus/></Button>
+      <div className="">
+        <input type="number" className="hidden" name="qty" id="qty" value={Number(number)} onChange={(e) => e.target.value}/>
+        <label
+          htmlFor="qty"
+          className="flex items-center p-3 border-gray-200 border-2 rounded-2xl h-13"
+        >
+          <Button
+            className="bg-white text-black text-2xl font-bold hover:cursor-pointer"
+            onClick={decrement}
+          >
+            <Minus />
+          </Button>
+          <span className="font-bold">{number}</span>
+          <Button
+            className="bg-white text-black text-2xl font-bold hover:cursor-pointer"
+            onClick={increment}
+          >
+            <Plus />
+          </Button>
+        </label>
       </div>
     </>
   );
