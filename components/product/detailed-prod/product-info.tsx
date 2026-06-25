@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import SizeContainer from "./sizes-comp";
+import { toast } from "sonner";
+import { useEffect } from "react";
 import IncreDecre from "./incre-decre";
 import Description from "./description";
 import AddToCart from "@/components/product/add-to-cart";
@@ -21,6 +23,14 @@ export default function ProductInfo({ product, sizes, colors }: ProductProp) {
   const [state, action, isPending] = useActionState(addToCart, {});
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+
+  useEffect(() => {
+  if (state.success === true) {
+    toast.success(state.message ?? "Added to cart");
+  } else if (state.success === false) {
+    toast.error(state.message ?? "Something went wrong");
+  }
+}, [state]);
 
   return (
     <>
@@ -68,6 +78,7 @@ export default function ProductInfo({ product, sizes, colors }: ProductProp) {
           <input type="hidden" name="size" value={selectedSize} />
           <input type="hidden" name="color" value={selectedColor} />
           <SizeContainer
+            guide={product.guide}
             sizes={sizes}
             setSelectedSize={setSelectedSize}
             selectedSize={selectedSize}

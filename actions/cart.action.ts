@@ -61,9 +61,12 @@ export async function addToCart(
     console.log("item is", item);
     if (!item.success) {
       const errors = z.flattenError(item.error).fieldErrors;
-      return { errors, message: "something went wrong" };
+      const firstError =
+        errors.size?.[0] ??
+        errors.color?.[0] ??
+        "Please select a size and color";
+      return { errors, message: firstError, success: false }; // ← add success: false
     }
-
     // find product in the database
     const product = await prisma.product.findFirst({
       where: { id: item.data.productId },
