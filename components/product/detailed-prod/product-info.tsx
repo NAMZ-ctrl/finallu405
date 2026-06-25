@@ -91,7 +91,7 @@ export default function ProductInfo({ product, sizes, colors }: ProductProp) {
           <div className="grid items-center gap-3">
             <div className="grid grid-cols-[1fr_3fr] gap-4">
               <IncreDecre />
-              <AddToCart />
+              <AddToCart isPending={isPending}/>
             </div>
             <Button className="h-13 hover:cursor-pointer hover:opacity-80">
               Buy it Now
