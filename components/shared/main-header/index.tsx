@@ -28,7 +28,7 @@ export default function Header() {
         </nav>
        <Image src={logo} alt="logo" width={150} />
         <div className="flex gap-3">
-            <ShoppingCart size={24} color="#000"/>
+            <Link href={'/cart'} className="hover:cursor-pointer"><ShoppingCart size={24} color="#000"/></Link>
             {/* <UserButton/> */}
         </div>
       </header>

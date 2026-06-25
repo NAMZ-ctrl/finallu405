@@ -1,4 +1,4 @@
-import { email, z } from "zod";
+import { coerce, email, z } from "zod";
 
 export const insertProductSchema = z.object({
   name: z.string().min(3, "Product name must be at least 3 characters long"),
@@ -27,25 +27,31 @@ export const cartSchema = z.object({
   productId: z.string().min(1, "id is required"),
   name: z.string().min(1, "name is required"),
   slug: z.string().min(1, "slug is required"),
-  qty: z.string(),
+  qty: z.coerce.number(),
   size: z.string().min(1, "size is required"),
   color: z.string().min(1, "color is required"),
   image: z.string().min(1, "Image is required"),
-  price: z.string(),
+  price: z.coerce.number(),
 });
 
 export const insertCartSchema = z.object({
   items: z.array(cartSchema),
-  itemsPrice: z.number(),
-  totalPrice: z.number(),
-  shippingPrice: z.number(),
-  taxPrice: z.number(),
+  itemsPrice: z.coerce.number(),
+  totalPrice: z.coerce.number(),
+  shippingPrice: z.coerce.number(),
+  taxPrice: z.coerce.number(),
   sessionCartId: z.string().min(1, "session cart Id is required"),
   userId: z.string().optional().nullable(),
 });
 
+// shipping address schema
+export const shippingAddressSchema = z.object({
+  fullName: z.string().min(3, 'Name must be at least two characters'),
+
+})
 export type SignInInput = z.infer<typeof signInFormSchema>;
 export type SignInError = z.core.$ZodFlattenedError<SignInInput>["fieldErrors"];
 export type InsertCart = z.infer<typeof insertCartSchema>;
 export type Cart = z.infer<typeof cartSchema>;
 export type CartError = z.core.$ZodFlattenedError<Cart>["fieldErrors"]
+export type InsertCartError = z.core.$ZodFlattenedError<InsertCart>["fieldErrors"];

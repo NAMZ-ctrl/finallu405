@@ -1,41 +1,43 @@
 "use client";
-import { Card, CardHeader, CardTitle, CardDescription } from "../ui/card";
 import type { Product } from "@/app/generated/prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function EachProduct({ product }: { product: Product}) {
-  const [imageNum, setImageNum] = useState(0)
-
-  const changeImage = () => {
-    setImageNum((prev) => (prev + 1) % product.images.length)
-    console.log('changed image', imageNum)
-  }
-
-  const setInitialImage = () => {
-    setImageNum(0);
-    console.log('initial image', imageNum)
-  }
+export default function EachProduct({ product }: { product: Product }) {
+  const [imageIdx, setImageIdx] = useState(0);
 
   return (
-    <Link href={`/products/${product.slug}`} className="hover:scale-[1.1]" onMouseOver={changeImage} onMouseOut={setInitialImage}>
-      <Card className="border-none">
-        <CardHeader>
-            <Image
-              src={product.images[imageNum]}
-              alt={product.name}
-              width={260}
-              height={260}
-            />
-          <CardTitle className="font-semibold text-md">
-            {product.name}
-          </CardTitle>
-          <CardDescription className="font-bold text-black">
-            {product.price}
-          </CardDescription>
-        </CardHeader>
-      </Card>
+    <Link
+      href={`/products/${product.slug}`}
+      className="group block w-40 sm:w-50 border border-border rounded-xl overflow-hidden bg-background hover:border-foreground/30 transition-colors duration-200"
+    >
+      {/* image */}
+      <div
+        className="relative bg-muted w-full aspect-square overflow-hidden"
+        onMouseEnter={() => {
+          if (product.images.length > 1) setImageIdx(1);
+        }}
+        onMouseLeave={() => setImageIdx(0)}
+      >
+        <Image
+          src={product.images[imageIdx]}
+          alt={product.name}
+          fill
+          className="object-cover transition-opacity duration-300"
+          sizes="200px"
+        />
+      </div>
+
+      {/* info */}
+      <div className="px-3 py-3">
+        <p className="text-sm font-medium leading-snug line-clamp-2 text-foreground">
+          {product.name}
+        </p>
+        <p className="text-sm text-muted-foreground mt-1">
+          ₦{Number(product.price).toLocaleString()}
+        </p>
+      </div>
     </Link>
   );
 }

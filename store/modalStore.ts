@@ -1,13 +1,11 @@
 import { create } from "zustand";
 
-type ModalAction = {
+interface ModalStore {
   open: boolean;
   handleOpenClick: () => void;
-  handleCloseClick: () => void;
-};
+}
 
-export const useModal = create<ModalAction>((set) => ({
+export const useModal = create<ModalStore>((set) => ({
   open: false,
-  handleOpenClick: () => set({ open: true }),
-  handleCloseClick: () => set({ open: false }),
+  handleOpenClick: () => set((state) => ({ open: !state.open })),
 }));

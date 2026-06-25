@@ -17,8 +17,8 @@ export default function IncreDecre() {
   };
   return (
     <>
-      <div className="">
-        <input type="number" className="hidden" name="qty" id="qty" value={Number(number)} onChange={(e) => e.target.value}/>
+      <div className="flex">
+        <input type="number" className="hidden" name="qty" id="qty" value={number} onChange={(e) => e.target.value}/>
         <label
           htmlFor="qty"
           className="flex items-center p-3 border-gray-200 border-2 rounded-2xl h-13"

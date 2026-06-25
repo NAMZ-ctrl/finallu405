@@ -1,37 +1,64 @@
-"use client"
-import { SquareArrowOutUpRight} from "lucide-react";
-import { useState } from "react";
-import { Size } from "@/prisma/app/generated/prisma/client";
+"use client";
 
-interface SizeProp{
-  sizes: Size[]
+import { SquareArrowOutUpRight } from "lucide-react";
+import React from "react";
+import { Size } from "@/prisma/app/generated/prisma/client";
+import SizeGuide from "./size-guide";
+import { useModal } from "@/store/modalStore";
+
+interface SizeProp {
+  sizes: Size[];
+  setSelectedSize: React.Dispatch<React.SetStateAction<string>>;
+  selectedSize: string;
+  guide: string;   // ← pass the guide image url down
 }
-export default function SizeContainer({sizes}: SizeProp) {
-  const [productSize, setProductSize] = useState("");
-  console.log("sizes", sizes)
+
+export default function SizeContainer({ sizes, setSelectedSize, selectedSize, guide }: SizeProp) {
+  const { handleOpenClick } = useModal(); // ← hook, not .getState()
+
   return (
-    <>
-      <div className="grid gap-4">
-        <button className="font-bold flex gap-1 items-center bg-white text-black">
-          <span className="uppercase">Size Guide</span>
-          <SquareArrowOutUpRight size={15} className="font-bold"/>
-        </button>
-       <fieldset className="flex flex-col gap-3">
+    <div className="grid gap-4">
+      {/* size guide trigger */}
+      <button
+        type="button"
+        onClick={handleOpenClick}
+        className="font-bold flex gap-1 items-center w-fit text-sm hover:opacity-70 transition-opacity"
+      >
+        <span className="uppercase">Size Guide</span>
+        <SquareArrowOutUpRight size={13} />
+      </button>
+
+      <fieldset className="flex flex-col gap-3">
         <legend className="font-bold">Size</legend>
-        <div className="flex mt-3">
-          {sizes.map((size, index) => {
-            return (
-              <div key={index} className="flex md:justify-start flex-wrap gap-y-2 max-md:justify-between">
-                <input type="radio" id={size.name} name="size" className={`hidden`} value={size.name}  onChange={(e) => setProductSize(e.target.value)} />
-                <label htmlFor={size.name} className={`border-gray-200 border-2 w-14 h-10 ${(productSize === size.name) ? 'text-white bg-black' : 'text-black bg-white'} rounded-2xl flex items-center justify-center p-2 hover:cursor-pointer mr-3 transition-colors ease-in duration-300`}>
-                  {size.name}
-                </label>
-              </div>
-            );
-          })}
+        <div className="flex flex-wrap gap-2 mt-2">
+          {sizes.map((size, index) => (
+            <div key={index}>
+              <input
+                type="radio"
+                id={size.name}
+                name="size"
+                className="hidden"
+                value={size.name}
+                checked={selectedSize === size.name}
+                onChange={(e) => setSelectedSize(e.target.value)}
+              />
+              <label
+                htmlFor={size.name}
+                className={`border-2 w-14 h-10 rounded-2xl flex items-center justify-center p-2 hover:cursor-pointer transition-colors duration-200 text-sm font-medium
+                  ${selectedSize === size.name
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-black border-gray-200 hover:border-gray-400"
+                  }`}
+              >
+                {size.name}
+              </label>
+            </div>
+          ))}
         </div>
       </fieldset>
-      </div>
-    </>
+
+      {/* render the modal here inside SizeContainer so it's scoped */}
+      <SizeGuide guide={guide} />
+    </div>
   );
 }

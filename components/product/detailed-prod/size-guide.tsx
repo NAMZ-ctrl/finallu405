@@ -1,28 +1,44 @@
 "use client";
 
 import { X } from "lucide-react";
-import { ProductGuideProps } from "@/types/store";
 import Image from "next/image";
 import { useModal } from "@/store/modalStore";
+import { ProductGuideProps } from "@/types/store";
 
 export default function SizeGuide({ guide }: ProductGuideProps) {
-  const { open, handleOpenClick } = useModal.getState();
-  console.log("check if it is", open);
+  const { open, handleOpenClick } = useModal(); // ← hook, not .getState()
+
+  if (!open) return null;
+
   return (
     <>
-      <div className="absolute w-full h-65 z-99 bg-white top-1/2 -translate-y-1/2 p-5 flex flex-col">
-        <button
-          className="self-end hover:cursor-pointer"
-          onClick={handleOpenClick}
-        >
-          <X />
-        </button>
+      {/* backdrop */}
+      <div
+        className="fixed inset-0 bg-black/50 z-50"
+        onClick={handleOpenClick}
+      />
+
+      {/* modal */}
+      <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white rounded-2xl p-6 w-[90vw] max-w-md shadow-lg flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <h2 className="font-bold text-lg uppercase tracking-wide">
+            Size Guide
+          </h2>
+          <button
+            onClick={handleOpenClick}
+            className="hover:opacity-70 transition-opacity"
+            aria-label="Close size guide"
+          >
+            <X className="size-5" />
+          </button>
+        </div>
+
         <Image
           src={guide}
           alt="Size Guide"
-          width={150}
-          height={150}
-          className="self-center"
+          width={500}
+          height={500}
+          className="w-full h-auto object-contain rounded-lg"
         />
       </div>
     </>
