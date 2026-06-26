@@ -120,8 +120,12 @@ export async function addToCart(
         }
         // increase the quantity
         (cart.items as Cart[]).find(
-          (x) => x.productId === item.data.productId,
-        )!.qty = existItem.qty + 1;
+          (x) => x.productId === item.data.productId && x.color === item.data.color && x.size === item.data.size,
+        )!.qty = existItem.qty + item.data.qty;
+        console.log('color of the item')
+        console.log('the item i am looking for', (cart.items as Cart[]).find(
+          (x) => x.productId === item.data.productId && x.color && item.data.color && x.size && item.data.size,
+        ))
       } else {
         const size = await prisma.size.findFirst({
           where: {
@@ -233,7 +237,7 @@ export async function getMyCart() {
   };
 }
 
-export async function removeItemFromCart(productId: string) {
+export async function removeItemFromCart(productId: string, color: string, size:string) {
   try {
     // check for cart cookie
     const sessionCartId = (await cookies()).get("sessionCartId")?.value;
@@ -250,18 +254,19 @@ export async function removeItemFromCart(productId: string) {
     if (!cart) throw new Error("Cart not found");
 
     // check for item
-    const exist = (cart.items as Cart[]).find((x) => x.productId === productId);
+    const exist = (cart.items as Cart[]).find((x) => x.productId === productId && x.color === color && x.size === size);
     if (!exist) throw new Error("Item not found");
 
     // if only one qunatity
     if (Number(exist.qty) === 1) {
       // remove from cart
+     
       cart.items = (cart.items as Cart[]).filter(
-        (x) => x.productId !== exist.productId,
+        (x) => (x.productId !== productId || x.color !== color || x.size !== size),
       );
     } else {
       // DECREASE QTY
-      (cart.items as Cart[]).find((x) => x.productId === productId)!.qty =
+      (cart.items as Cart[]).find((x) => x.productId === productId && x.color === color && x.size === size)!.qty =
         Number(exist.qty) - 1;
     }
 

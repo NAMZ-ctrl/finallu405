@@ -6,6 +6,7 @@ import { removeItemFromCart, increaseQty } from "@/actions/cart.action";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Loader, Minus, Plus } from "lucide-react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { InsertCart } from "@/libs/validators";
 import { formatCurrency } from "@/libs/helper";
@@ -20,12 +21,9 @@ export default function ParallelCart({ cart }: { cart?: InsertCart }) {
     return (
       <div className="flex flex-col items-center justify-center flex-1 gap-3 py-16 text-center">
         <p className="text-sm text-muted-foreground">Your cart is empty</p>
-        <Link
-          href="/"
-          className="text-sm underline underline-offset-4 hover:opacity-70 transition-opacity"
-        >
-          Continue shopping
-        </Link>
+        <Button className="text-sm underline underline-offset-4 hover:opacity-70 transition-opacity" onClick={() => redirect('/collections/all-products')}>
+            Continue shopping
+        </Button>
       </div>
     );
   }
@@ -35,7 +33,10 @@ export default function ParallelCart({ cart }: { cart?: InsertCart }) {
       {/* scrollable items */}
       <div className="flex-1 overflow-y-auto divide-y divide-border px-5">
         {cart.items.map((item) => (
-          <div key={`${item.slug}${item.color}${item.qty}`} className="flex gap-3 py-4">
+          <div
+            key={`${item.color}${item.qty}${item.size}${item.slug}`}
+            className="flex gap-3 py-4"
+          >
             {/* image */}
             <div className="w-15 h-15 shrink-0 rounded-lg border border-border overflow-hidden bg-muted">
               <Image
@@ -68,7 +69,11 @@ export default function ParallelCart({ cart }: { cart?: InsertCart }) {
                   disabled={isPending}
                   onClick={() =>
                     startTransition(async () => {
-                      const res = await removeItemFromCart(item.productId);
+                      const res = await removeItemFromCart(
+                        item.productId,
+                        item.color,
+                        item.size,
+                      );
                       if (!res.success) console.log("did not work");
                     })
                   }

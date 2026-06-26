@@ -23,7 +23,7 @@ export default function CartTable({ cart }: CartProps) {
       <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
         <p className="text-muted-foreground text-lg">Your cart is empty</p>
         <Link
-          href="/"
+          href="/collections/all-products"
           className="text-sm underline underline-offset-4 hover:opacity-70 transition-opacity"
         >
           Continue shopping
@@ -48,7 +48,7 @@ export default function CartTable({ cart }: CartProps) {
         {/* items list */}
         <div className="divide-y divide-border">
           {cart.items.map((item) => (
-            <div key={`${item.slug}${item.size}${item.color}`} className="flex gap-4 py-5">
+            <div key={`${item.slug}${item.size}${item.color}${item.qty}`} className="flex gap-4 py-5">
               {/* image */}
               <Link href={`/products/${item.slug}`} className="shrink-0">
                 <div className="w-20 h-20 rounded-lg border border-border overflow-hidden bg-muted">
@@ -87,7 +87,7 @@ export default function CartTable({ cart }: CartProps) {
                     disabled={isPending}
                     onClick={() =>
                       startTransition(async () => {
-                        await removeItemFromCart(item.productId);
+                        await removeItemFromCart(item.productId, item.color, item.size);
                       })
                     }
                   >
@@ -128,7 +128,7 @@ export default function CartTable({ cart }: CartProps) {
                     disabled={isPending}
                     onClick={() =>
                       startTransition(async () => {
-                        await removeItemFromCart(item.productId);
+                        await removeItemFromCart(item.productId, item.color, item.size);
                       })
                     }
                   >

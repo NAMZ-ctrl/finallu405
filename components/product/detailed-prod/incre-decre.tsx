@@ -26,6 +26,7 @@ export default function IncreDecre() {
           <Button
             className="bg-white text-black text-2xl font-bold hover:cursor-pointer"
             onClick={decrement}
+            type="button"
           >
             <Minus />
           </Button>
@@ -33,6 +34,7 @@ export default function IncreDecre() {
           <Button
             className="bg-white text-black text-2xl font-bold hover:cursor-pointer"
             onClick={increment}
+            type="button"
           >
             <Plus />
           </Button>
