@@ -45,12 +45,34 @@ export const insertCartSchema = z.object({
 });
 
 // shipping address schema
-export const shippingAddressSchema = z.object({
-  fullName: z.string().min(3, 'Name must be at least two characters'),
 
+export const ShippingAddressSchema = z.object({
+  email: z.email('email is required'),
+  country: z.string().min(1, 'country is required'),
+  firstName: z.string().min(1, 'name must be at least one character'),
+  lastName: z.string().min(1, 'country is required'),
+  address: z.string().min(1, 'address is required'),
+  suite: z.string().optional(),
+  city: z.string().min(1, 'city must be at least one character'),
+  state: z.string().min(1, 'state must be at least one character'),
+  postalCode: z.string().min(2, "must at least be two characters"),
+  phoneNumber: z.string().min(2, "must at least be two characters")
 })
+
+// signing up 
+export const SignUpSchema = z.object({
+  name: z.string().min(3, 'Name must be at least 3 characters'),
+  email: z.email('email is not valid'),
+  password: z.string().min(3, 'password must be at least 6 characters'),
+  confirmPassword: z.string().min(3, 'password must be at least 6 characters'),
+}).refine((data) => data.password === data.confirmPassword, {message: 'password does not match', path: ['confirmPassword']});
+
 export type SignInInput = z.infer<typeof signInFormSchema>;
+export type SignUpInput = z.infer<typeof SignUpSchema>;
+export type SignUpError = z.core.$ZodFlattenedError<SignUpInput>["fieldErrors"];
+export type ShippingAddress = z.infer<typeof ShippingAddressSchema>;
 export type SignInError = z.core.$ZodFlattenedError<SignInInput>["fieldErrors"];
+export type ShippingAddressError = z.core.$ZodFlattenedError<ShippingAddress>["fieldErrors"]
 export type InsertCart = z.infer<typeof insertCartSchema>;
 export type Cart = z.infer<typeof cartSchema>;
 export type CartError = z.core.$ZodFlattenedError<Cart>["fieldErrors"]

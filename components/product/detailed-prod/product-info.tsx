@@ -93,7 +93,7 @@ export default function ProductInfo({ product, sizes, colors }: ProductProp) {
               <IncreDecre />
               <AddToCart isPending={isPending}/>
             </div>
-            <Button className="h-13 hover:cursor-pointer hover:opacity-80">
+            <Button className="h-13 hover:cursor-pointer hover:opacity-80" type="button">
               Buy it Now
             </Button>
           </div>

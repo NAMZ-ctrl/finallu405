@@ -138,7 +138,7 @@ export default function ParallelCart({ cart }: { cart?: InsertCart }) {
           className="w-full mt-1"
           disabled={isPending}
           onClick={() =>
-            startTransition(() => router.push("/shipping-address"))
+            startTransition(() => router.push("/checkout"))
           }
         >
           {isPending ? (

@@ -3,8 +3,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/db/db";
 import Credentials from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import type { PrismaClient } from "./app/generated/prisma/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
@@ -15,7 +15,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
   },
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma as any),
   providers: [
     Credentials({
       credentials: {
@@ -25,12 +25,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials) return null;
 
-        // checking if the user exists
         const user = await prisma.user.findFirst({
           where: { email: credentials.email as string },
         });
 
-        // comparing the password together
         if (user && user.password) {
           const isMatch = compareSync(
             credentials.password as string,
@@ -50,35 +48,50 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    async session({ session, user, trigger, token }: any) {
+    // ✅ missing comma was here between jwt and authorized — added below
+    async session({ session, token, trigger, user }: any) {
       session.user.id = token.sub;
+      session.user.role = token.role;
+      session.user.name = token.name;
       if (trigger === "update") {
-        session.user.name = user.name; // ← also fixed: you had === instead of =
+        session.user.name = user.name;
       }
-      return session; // ← must return session in v5
+      return session;
     },
-    authorized({request, auth}: any){
-      // check for session cart cookie
-      if (!request.cookies.get('sessionCartId')){
-        // generate new session cart id cookie
-        const sessionCartId = crypto.randomUUID();
 
-        //clone the req headers
+    async jwt({ token, user }: any) {
+      if (user) {
+        token.role = user.role;
+
+        if (user.name === "NO_NAME") {
+          token.name = user.email!.split("@")[0];
+
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { name: token.name },
+          });
+        }
+      }
+      return token;
+    },
+
+    // ✅ added missing comma after jwt above
+    authorized({ request, auth }: any) {
+      if (!request.cookies.get("sessionCartId")) {
+        const sessionCartId = crypto.randomUUID();
         const newRequestHeaders = new Headers(request.headers);
 
-        // create new response and add the new headers
         const response = NextResponse.next({
           request: {
             headers: newRequestHeaders,
-          }
-        })
-        
-        // set newly generated sessionCartId in the response cookies
-        response.cookies.set('sessionCartId', sessionCartId);
+          },
+        });
+
+        response.cookies.set("sessionCartId", sessionCartId);
         return response;
-      }else{
+      } else {
         return true;
       }
-    }
+    },
   },
 });

@@ -166,8 +166,9 @@ export default function CartTable({ cart }: CartProps) {
             <Button
               className="w-full mt-2"
               disabled={isPending}
+
               onClick={() =>
-                startTransition(() => router.push("/shipping-address"))
+                startTransition(() => router.push("/checkout"))
               }
             >
               {isPending ? (
