@@ -23,7 +23,7 @@ export default async function SignUpPage() {
             <Image src={logo} width={48} height={48} alt="Clapped logo" className="object-contain" />
           </div>
           <div>
-            <p className="text-xl font-bold tracking-widest uppercase">Clapped</p>
+            <p className="text-xl font-bold tracking-widest uppercase">405</p>
             <p className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-45 mx-auto">
               Join the familia. Create your account today.
             </p>
