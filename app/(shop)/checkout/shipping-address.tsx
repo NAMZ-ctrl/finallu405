@@ -114,7 +114,7 @@ export default function ShippingAddressForm() {
       console.log('error')
       return;
     }
-    router.push('/payment-methid')
+    
    })
   };
 
