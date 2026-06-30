@@ -1,10 +1,8 @@
 import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/db/db";
 import Credentials from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
 import { NextResponse } from "next/server";
-import type { PrismaClient } from "./app/generated/prisma/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
@@ -15,7 +13,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
   },
-  adapter: PrismaAdapter(prisma as any),
+  // ← removed PrismaAdapter — JWT strategy doesn't need it
+  // the adapter is only needed for database sessions
   providers: [
     Credentials({
       credentials: {
@@ -48,13 +47,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    // ✅ missing comma was here between jwt and authorized — added below
-    async session({ session, token, trigger, user }: any) {
+    async session({ session, token, trigger }: any) {
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
       if (trigger === "update") {
-        session.user.name = user.name;
+        session.user.name = token.name;
       }
       return session;
     },
@@ -65,7 +63,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         if (user.name === "NO_NAME") {
           token.name = user.email!.split("@")[0];
-
           await prisma.user.update({
             where: { id: user.id },
             data: { name: token.name },
@@ -75,23 +72,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token;
     },
 
-    // ✅ added missing comma after jwt above
-    authorized({ request, auth }: any) {
+    authorized({ request }: any) {
       if (!request.cookies.get("sessionCartId")) {
         const sessionCartId = crypto.randomUUID();
         const newRequestHeaders = new Headers(request.headers);
-
         const response = NextResponse.next({
-          request: {
-            headers: newRequestHeaders,
-          },
+          request: { headers: newRequestHeaders },
         });
-
         response.cookies.set("sessionCartId", sessionCartId);
         return response;
-      } else {
-        return true;
       }
+      return true;
     },
   },
 });
